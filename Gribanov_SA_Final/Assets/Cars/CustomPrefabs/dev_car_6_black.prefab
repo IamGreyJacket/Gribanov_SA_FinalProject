@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6534710714410032641
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2171488485145186571, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171488485145186571, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171488485145186571, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171488485145186571, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325056200758370936, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_Name
+      value: FarCameraPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353631816800386846, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_text
+      value: 'Race Time: 00:00.0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353631816800386846, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353631816800386846, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353631816800386846, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2748229085026882982, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_RenderingPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2748229085811139400, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4325376340192777850, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _engineTorque
+      value: 840
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _drivetrain
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _gears.Array.data[5]
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _gears.Array.data[6]
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _gearDownRPM
+      value: 2750
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[1].time
+      value: 570.77576
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[1].value
+      value: 725.6544
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[2].time
+      value: 1114.9331
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[2].value
+      value: 887.15405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[3].time
+      value: 3115.764
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[3].value
+      value: 936.3967
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[4].time
+      value: 4301.508
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430757988737034909, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: _enginePowerCurve.m_Curve.Array.data[4].value
+      value: 946.3446
+      objectReference: {fileID: 0}
+    - target: {fileID: 4887878611884166920, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_Name
+      value: dev_car_6_black
+      objectReference: {fileID: 0}
+    - target: {fileID: 4887878611884166927, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097476671184124426, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_Name
+      value: CheckpointCounter
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.094
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00001576675
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -30.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232878338986841522, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885813627949391726, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885813628182790932, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885813628359705683, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885813629156548807, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771216298965098531, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_Name
+      value: LapTime
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030500575368701290, guid: 6bce71495cc068248b411053ffe59728,
+        type: 3}
+      propertyPath: m_Name
+      value: CheckpointsCounterText
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6bce71495cc068248b411053ffe59728, type: 3}
