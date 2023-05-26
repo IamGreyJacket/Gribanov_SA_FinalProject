@@ -561,13 +561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 2748229085026882982}
   _rigidbody: {fileID: 4887878611884166927}
-  _cameraPositions:
-  - {fileID: 0}
-  - {fileID: 0}
   _thirdPersonPosition: {fileID: 5886123288072838193}
   _bonnetPosition: {fileID: 702352857007635893}
   _smoothTime: 0.025
-  _isSmooth: 0
 --- !u!1 &5236036608910894716
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +787,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 750
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -826,7 +822,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
