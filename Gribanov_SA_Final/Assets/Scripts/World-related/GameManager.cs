@@ -14,7 +14,7 @@ namespace Racer.Managers
 
         public event Action OnEscapeEvent;
 
-        private byte _laps;
+        private byte _laps = 1;
         private byte _bots;
 
         public void SetLaps(string laps)
@@ -96,6 +96,7 @@ namespace Racer.Managers
             if (_trackManager != null)
             {
                 _trackManager.Laps = _laps;
+                if (_trackManager.RaceType == RaceType.TimeAttack) _trackManager.Laps = 3;
                 Debug.Log($"_trackManager.Laps: {_trackManager.Laps}. _laps: {_laps}");
                 _trackManager.SetJudges();
             }

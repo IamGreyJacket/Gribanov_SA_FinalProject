@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8865950175841254711}
   m_Layer: 0
-  m_Name: CameraPoint
+  m_Name: ThirdPersonCameraPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,6 +217,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8865950175841254711}
+  - {fileID: 4179539239187402445}
   m_Father: {fileID: 7078374762984879284}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -299,6 +300,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &6346307948207787941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4179539239187402445}
+  m_Layer: 0
+  m_Name: BonnetCameraPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4179539239187402445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346307948207787941}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.259, z: 0.874}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2317126552756398369}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7066069518559938426
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +643,7 @@ GameObject:
   - component: {fileID: 2317126552888519705}
   - component: {fileID: 7016915811718134121}
   - component: {fileID: 8563863283056595716}
+  - component: {fileID: 7018469322476362754}
   m_Layer: 0
   m_Name: freeroam_car_6_black
   m_TagString: Untagged
@@ -813,6 +845,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _car: {fileID: 1718314219177053083}
+--- !u!114 &7018469322476362754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7597749543563554318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f58a1944a03f91449520e92b37d704f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 3974246691059722516}
+  _rigidbody: {fileID: 7597749543563554313}
+  _cameraPositions:
+  - {fileID: 8865950175841254711}
+  - {fileID: 4179539239187402445}
+  _thirdPersonPosition: {fileID: 8865950175841254711}
+  _bonnetPosition: {fileID: 4179539239187402445}
+  _smoothTime: 0.025
+  _isSmooth: 0
 --- !u!1 &8442780648418263495
 GameObject:
   m_ObjectHideFlags: 0
