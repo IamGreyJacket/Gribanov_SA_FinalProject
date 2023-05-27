@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NewPlayerSave
   m_EditorClassIdentifier: 
   TimeAttackIsOpen: 0
-  CircuitIsOpen: 0
+  CircuitIsOpen: 1
   SoundVolume: 1

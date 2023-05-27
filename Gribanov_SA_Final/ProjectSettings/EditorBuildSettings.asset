@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 333d20988044cb640ae65afa66265a92
+  - enabled: 1
+    path: Assets/Scenes/FreeroamScene.unity
+    guid: a62960540ee6f604e8219cd7190f55e0
+  - enabled: 1
+    path: Assets/Scenes/TimeAttack.unity
+    guid: a403321297a67de4ca923b6c16d3dc3b
+  - enabled: 1
+    path: Assets/Scenes/RacetrackScene.unity
+    guid: c7e826cefd5f892419daf105d0e18e13
   m_configObjects: {}

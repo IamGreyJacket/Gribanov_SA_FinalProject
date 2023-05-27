@@ -98,7 +98,7 @@ namespace Racer.Managers
                 _trackManager.Laps = _laps;
                 if (_trackManager.RaceType == RaceType.TimeAttack) _trackManager.Laps = 3;
                 Debug.Log($"_trackManager.Laps: {_trackManager.Laps}. _laps: {_laps}");
-                _trackManager.SetJudges();
+                //_trackManager.SetJudges();
             }
             if (_botManager != null)
             {
