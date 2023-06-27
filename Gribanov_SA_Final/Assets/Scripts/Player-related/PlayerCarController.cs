@@ -13,6 +13,8 @@ namespace Racer.Player
 
         private PlayerControls _controls;
         public PlayerControls Controls => _controls;
+        [SerializeField, Min(1)]
+        private float _steeringSpeed = 3f;
 
         #region Controls enabling/disabling
         private void Awake()
@@ -23,6 +25,7 @@ namespace Racer.Player
             _controls.Car.HandBrake.performed += _ => OnHandbrakeUse(true);
             _controls.Car.HandBrake.canceled += _ => OnHandbrakeUse(false);
             _controls.Car.Flip.performed += OnFlip;
+            _controls.Enable();
         }
 
         private void Start()
@@ -33,12 +36,18 @@ namespace Racer.Player
 
         private void OnEnable()
         {
-            _controls.Enable();
+            if (_controls != null)
+            {
+                _controls.Enable();
+            }
         }
 
         private void OnDisable()
         {
-            _controls.Disable();
+            if (_controls != null)
+            {
+                _controls.Disable();
+            }
         }
 
         private void OnDestroy()
@@ -55,12 +64,13 @@ namespace Racer.Player
             if (direction == 0f && Rotate != 0f)
             {
                 Rotate = Rotate > 0f
-                    ? Rotate - Time.fixedDeltaTime
-                    : Rotate + Time.fixedDeltaTime;
+                    ? Rotate - Time.fixedDeltaTime * (_steeringSpeed / 2)
+                    : Rotate + Time.fixedDeltaTime * (_steeringSpeed / 2);
+                if (Rotate < .05f && Rotate > -.05f) Rotate = 0f;
             }
             else
             {
-                Rotate = Mathf.Clamp(Rotate + direction * Time.fixedDeltaTime, -1f, 1f);
+                Rotate = Mathf.Clamp(Rotate + direction * Time.fixedDeltaTime * _steeringSpeed, -1f, 1f);
             }
 
             Brakes = _controls.Car.Brakes.ReadValue<float>();

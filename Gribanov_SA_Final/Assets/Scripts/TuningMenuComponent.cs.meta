@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 880b9aa8175dd0744947ea71da85e0cc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _wheelsDropdown: {instanceID: 0}
+  - _spoilerDropdown: {instanceID: 0}
+  - _tuningSpawnPoint: {instanceID: 0}
+  - _ladaPrefab: {fileID: 666343439606013132, guid: 3912400d637d24247a5063bb62fb6308,
+      type: 3}
+  - _uazPrefab: {fileID: 8557304665014682080, guid: 678752bb06b3f1147adc5d1651d0d35c,
+      type: 3}
+  - _gazPrefab: {fileID: 1718314219177053083, guid: 33d5f8711cf08e64b82fde9564015500,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

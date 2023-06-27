@@ -41,6 +41,11 @@ namespace Racer.Player
             _playerJudge.FinishedLapEvent -= UpdateRaceInfo;
         }
 
+        public void SetJudge(Judge judge)
+        {
+            _playerJudge = judge;
+        }
+
         private void UpdateRaceInfo()
         {
             if (_playerJudge.GetLapsDone >= _playerJudge.TotalLaps) _lapsCounter.text = $"Laps: {_playerJudge.TotalLaps} / {_playerJudge.TotalLaps}";

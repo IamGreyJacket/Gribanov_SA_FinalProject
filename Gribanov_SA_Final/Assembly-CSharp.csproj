@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Bot-related\BotCheckpoint.cs" />
     <Compile Include="Assets\Scripts\Bot-related\BotManager.cs" />
     <Compile Include="Assets\Scripts\Car-related\CarComponent.cs" />
+    <Compile Include="Assets\Scripts\Car-related\VisualTuningComponent.cs" />
     <Compile Include="Assets\Scripts\Car-related\WheelsComponent.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Player-related\BaseController.cs" />
@@ -75,7 +76,9 @@
     <Compile Include="Assets\Scripts\Player-related\Dashboard.cs" />
     <Compile Include="Assets\Scripts\Player-related\PlayerCarController.cs" />
     <Compile Include="Assets\Scripts\Player-related\PlayerControls.cs" />
-    <Compile Include="Assets\Scripts\Player-related\PlayerSave.cs" />
+    <Compile Include="Assets\Scripts\Player-related\PlayerSaveSO.cs" />
+    <Compile Include="Assets\Scripts\SaveManager.cs" />
+    <Compile Include="Assets\Scripts\TuningMenuComponent.cs" />
     <Compile Include="Assets\Scripts\World-related\AudioManager.cs" />
     <Compile Include="Assets\Scripts\World-related\CarAudioComponent.cs" />
     <Compile Include="Assets\Scripts\World-related\Checkpoint.cs" />
@@ -83,8 +86,10 @@
     <Compile Include="Assets\Scripts\World-related\GameManager.cs" />
     <Compile Include="Assets\Scripts\World-related\Judge.cs" />
     <Compile Include="Assets\Scripts\World-related\LeaderboardManager.cs" />
+    <Compile Include="Assets\Scripts\World-related\MinimapComponent.cs" />
     <Compile Include="Assets\Scripts\World-related\RaceHUD.cs" />
     <Compile Include="Assets\Scripts\World-related\ResultsManager.cs" />
+    <Compile Include="Assets\Scripts\World-related\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\World-related\TrackManager.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -98,6 +103,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Cars\JKT_KART_TIRE\etc\MatCap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />

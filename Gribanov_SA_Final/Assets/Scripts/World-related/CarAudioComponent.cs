@@ -7,12 +7,18 @@ namespace Racer.Managers.Assistants
     public class CarAudioComponent : MonoBehaviour
     {
         [SerializeField]
-        AudioSource _audioSource;
+        private AudioSource _engineAudioSource;
+        [SerializeField]
+        private AudioSource _bodyAudioSource;
+        [SerializeField]
+        private AudioSource _wheelsAudioSource;
 
         [Space, SerializeField]
-        private AudioClip _engineIdle;
+        private AudioClip _engineIdleAudio;
         [SerializeField]
-        private AudioClip _engineRunning;
+        private AudioClip _engineRunningAudio;
+        [SerializeField]
+        private AudioClip _crashAudio;
 
         [Space, SerializeField, Min(0)]
         private float _minAudioPitch = 0.5f;
@@ -31,7 +37,7 @@ namespace Racer.Managers.Assistants
 
         private void Awake()
         {
-            if (_audioSource == null) Debug.Log("No Audio Source");
+            if (_engineAudioSource == null) Debug.Log("No Audio Source");
             else
             {
                 _isAcceptable = true;
@@ -43,7 +49,12 @@ namespace Racer.Managers.Assistants
         {
             if (!_isAcceptable) return;
             CalculatePitch();
-            _audioSource.pitch = _audioPitch;
+            _engineAudioSource.pitch = _audioPitch;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            _bodyAudioSource.PlayOneShot(_crashAudio);
         }
 
         private void CalculatePitch()
@@ -52,14 +63,14 @@ namespace Racer.Managers.Assistants
             _audioPitch = _maxAudioPitch * engineRPMRatio;
             if (_audioPitch < _minAudioPitch || _car.EngineRPM < _idleRPM)
             {
-                _audioSource.clip = _engineIdle;
+                _engineAudioSource.clip = _engineIdleAudio;
                 _audioPitch = _idlePitch;
             }
             else
             {
-                _audioSource.clip = _engineRunning; //
+                _engineAudioSource.clip = _engineRunningAudio; //
             }
-            if (!_audioSource.isPlaying) _audioSource.Play();
+            if (!_engineAudioSource.isPlaying) _engineAudioSource.Play();
         }
 
     }

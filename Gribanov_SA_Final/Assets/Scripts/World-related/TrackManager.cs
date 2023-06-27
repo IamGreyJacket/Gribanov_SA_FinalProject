@@ -21,7 +21,13 @@ namespace Racer.Managers
             }
         }
 
-        [SerializeField]
+        [Header("Spawn-related"), SerializeField]
+        private SpawnManager _spawnManager;
+
+        public int CarsToSpawn { get; set; } = 1;
+        public CarComponent PlayerCar { get; set; }
+
+        [Space, Header("Race-related"), SerializeField]
         private Checkpoint[] _checkpoints;
         [SerializeField]
         private FinishLine _finishLine;
@@ -51,7 +57,7 @@ namespace Racer.Managers
             }
         }
 
-        [Space, SerializeField]
+        [Space, Header("UI-related"), SerializeField]
         private GameObject _raceInfoWindow;
         [SerializeField]
         private TextMeshProUGUI _raceInfoText;
@@ -70,7 +76,6 @@ namespace Racer.Managers
             {
                 Debug.LogError("Not all UI Elements are set for Track Manager in the inspector");
             }
-            GetJudges();
             if (_raceType != RaceType.Freeroam)
             {
                 _finishLine.OnRacerFinishRaceEvent += OnRacerFinish;
@@ -89,6 +94,13 @@ namespace Racer.Managers
 
         private void Start()
         {
+            //PrepareForRace();
+        }
+
+        public void PrepareForRace()
+        {
+            SpawnPlayer();
+            GetJudges();
             SetJudges();
             string text = $" Race Type: {RaceType}\nLaps: {Laps}\n";
             switch (RaceType)
@@ -154,7 +166,13 @@ namespace Racer.Managers
             Debug.Log($"Car {judge.name} finished {_finishCarsCounter} / {_judges.Length}");
         }
 
-        private void GetJudges()
+        private void SpawnPlayer()
+        {
+            Debug.Log($"Trying to spawn {PlayerCar}");
+            _spawnManager.SpawnCar(PlayerCar);
+        }
+
+        public void GetJudges()
         {
             _judges = FindObjectsOfType<Judge>();
         }

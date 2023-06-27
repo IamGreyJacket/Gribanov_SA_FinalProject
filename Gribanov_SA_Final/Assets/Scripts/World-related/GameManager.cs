@@ -19,6 +19,12 @@ namespace Racer.Managers
 
         public void SetLaps(string laps)
         {
+            if(laps == "" && laps == null)
+            {
+                Debug.Log("Something is wrong with input field");
+                return;
+            }
+            if(Convert.ToInt32(laps) <= 0)
             _laps = Convert.ToByte(laps);
             Debug.Log($"Laps: {_laps}");
         }
@@ -29,9 +35,10 @@ namespace Racer.Managers
             Debug.Log($"Bots: {_bots}");
         }
 
-        public Player.PlayerSave PlayerSave;
+        public Player.PlayerSaveSO PlayerSave;
 
         public static GameManager Self { get; private set; }
+        private bool _isSelf = false;
 
         [SerializeField]
         private TrackManager _trackManager;
@@ -40,11 +47,33 @@ namespace Racer.Managers
         [SerializeField]
         private ResultsManager _resultsManager;
         [SerializeField]
+        private SaveManager _saveManager;
+        [SerializeField]
         private Menu.MenuManager _menuManager;
         [SerializeField]
         private AudioManager _audioManager;
 
+        [Space, SerializeField]
+        private CarComponent _ladaPlayerCarPrefab;
+        [SerializeField]
+        private CarComponent _uazPlayerCarPrefab;
+        [SerializeField]
+        private CarComponent _volgaPlayerCarPrefab;
+        [SerializeField]
+        private CarComponent _ladaBotCarPrefab;
+        [SerializeField]
+        private CarComponent _uazBotCarPrefab;
+        [SerializeField]
+        private CarComponent _volgaBotCarPrefab;
+
+        public CarComponent PlayerCar { get; set; }
+
+        public TrackManager TrackManager => _trackManager;
+        public AI.BotManager BotManager => _botManager;
         public ResultsManager ResultsManager => _resultsManager;
+        public SaveManager SaveManager => _saveManager;
+        public Menu.MenuManager MenuManager => _menuManager;
+        public AudioManager AudioManager => _audioManager;
 
         private PlayerControls _controls;
 
@@ -53,6 +82,7 @@ namespace Racer.Managers
             if (Self == null)
             {
                 Self = this;
+                _isSelf = true;
                 DontDestroyOnLoad(this);
 
                 _controls = new PlayerControls();
@@ -60,6 +90,16 @@ namespace Racer.Managers
                 OnEscapeEvent += LoadMainMenu;
                 _controls.Enable();
                 FindManagers();
+                if (_saveManager != null)
+                {
+                    var playerSave = _saveManager.GetSave();
+                    if (playerSave != null)
+                    {
+                        PlayerSave.Info = JsonUtility.FromJson<Player.PlayerSaveInfo>(playerSave);
+                        SaveGame();
+                    }
+                }
+                SetPlayerCar(PlayerSave.Info.CarID);
                 SetManagers();
             }
             else
@@ -70,12 +110,16 @@ namespace Racer.Managers
 
         private void OnDestroy()
         {
-            OnEscapeEvent -= LoadMainMenu;
-            if (_controls != null)
+            if (_isSelf)
             {
-                _controls.Base.Escape.performed -= OnEscape;
-                _controls.Disable();
-                _controls.Dispose();
+                SaveGame();
+                OnEscapeEvent -= LoadMainMenu;
+                if (_controls != null)
+                {
+                    _controls.Base.Escape.performed -= OnEscape;
+                    _controls.Disable();
+                    _controls.Dispose();
+                }
             }
         }
 
@@ -87,8 +131,36 @@ namespace Racer.Managers
 
         private void OnLevelWasLoaded(int level)
         {
-            FindManagers();
-            SetManagers();
+            if (_isSelf)
+            {
+                FindManagers();
+                SetManagers();
+            }
+        }
+
+        public void SetPlayerCar(int carID)
+        {
+            switch (carID)
+            {
+                case 0:
+                    PlayerCar = null;
+                    PlayerSave.Info.CarID = carID;
+                    break;
+                case 1:
+                    PlayerCar = _ladaPlayerCarPrefab;
+                    PlayerSave.Info.CarID = carID;
+                    break;
+                case 2:
+                    PlayerCar = _uazPlayerCarPrefab;
+                    PlayerSave.Info.CarID = carID;
+                    break;
+                case 3:
+                    PlayerCar = _volgaPlayerCarPrefab;
+                    PlayerSave.Info.CarID = carID;
+                    break;
+            }
+            Debug.Log($"{carID}, {PlayerCar}");
+            SaveGame();
         }
 
         public void SetManagers()
@@ -98,7 +170,9 @@ namespace Racer.Managers
                 _trackManager.Laps = _laps;
                 if (_trackManager.RaceType == RaceType.TimeAttack) _trackManager.Laps = 3;
                 Debug.Log($"_trackManager.Laps: {_trackManager.Laps}. _laps: {_laps}");
-                //_trackManager.SetJudges();
+                _trackManager.PlayerCar = PlayerCar;
+                if (PlayerCar == null) _trackManager.PlayerCar = _ladaPlayerCarPrefab;
+                _trackManager.PrepareForRace();
             }
             if (_botManager != null)
             {
@@ -108,14 +182,19 @@ namespace Racer.Managers
             {
 
             }
+            if (_saveManager != null)
+            {
+
+            }
             if (_menuManager != null)
             {
-                _menuManager.SetPlayerSave(PlayerSave);
+                //_menuManager.SetPlayerSave(PlayerSave);
+                _menuManager.SetCarDropdown(PlayerSave.Info.CarID);
                 //открывать или закрывать доступ в соответствии с сейвом
             }
             if(_audioManager != null)
             {
-                _audioManager.SetVolume(PlayerSave.SoundVolume);
+                _audioManager.SetVolume(PlayerSave.Info.SoundVolume);
             }
         }
 
@@ -124,12 +203,14 @@ namespace Racer.Managers
             _trackManager = null;
             _botManager = null;
             _resultsManager = null;
+            _saveManager = null;
             _menuManager = null;
             _audioManager = null;
 
             _trackManager = FindObjectOfType<TrackManager>();
             _botManager = FindObjectOfType<AI.BotManager>();
             _resultsManager = FindObjectOfType<ResultsManager>();
+            _saveManager = FindObjectOfType<SaveManager>();
             _menuManager = FindObjectOfType<Menu.MenuManager>();
             _audioManager = FindObjectOfType<AudioManager>();
         }
@@ -151,12 +232,24 @@ namespace Racer.Managers
             scene.allowSceneActivation = true;
         }
 
+        public void SaveGame()
+        {
+            if (_saveManager != null)
+            {
+                _saveManager.WriteSave(PlayerSave.Info);
+            }
+            else
+            {
+                Debug.LogError("Save Manager is not found and PlayerSave can't be written");
+            }
+        }
+
         public void SetVolume(float volume)
         {
-            PlayerSave.SoundVolume = volume;
+            PlayerSave.Info.SoundVolume = volume;
             if (_audioManager != null)
             {
-                _audioManager.SetVolume(PlayerSave.SoundVolume);
+                _audioManager.SetVolume(PlayerSave.Info.SoundVolume);
             }
         }
     }

@@ -23,7 +23,11 @@ namespace Racer.Managers.Assistants
             judge.OnFinishLap();
             OnRacerFinishLapEvent?.Invoke(judge);
             Debug.Log("Lap counted");
-            if (judge.GetLapsDone == judge.TotalLaps || judge.CurrentLapTime < judge.TimeToBeat) OnRacerFinishRaceEvent?.Invoke(judge);
+            if (judge.GetLapsDone == judge.TotalLaps || judge.LapTimes[judge.GetLapsDone - 1] < judge.TimeToBeat)
+            {
+                OnRacerFinishRaceEvent?.Invoke(judge);
+                Debug.Log($"{judge.GetLapsDone} / {judge.TotalLaps}. {judge.LapTimes[judge.GetLapsDone - 1]} / {judge.TimeToBeat}");
+            }
         }
     }
 }

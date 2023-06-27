@@ -20,6 +20,9 @@ namespace Racer.Player
         [SerializeField]
         private Transform _bonnetPosition;
         private Transform _currentPositionTransform;
+
+        public Transform ThirdPerson => _thirdPersonPosition;
+        public Transform Bonnet => _bonnetPosition;
         //private byte _currentPosition = 0;
 
         [SerializeField, Min(0f)]
@@ -27,28 +30,55 @@ namespace Racer.Player
 
         private Vector3 _velocity = Vector3.zero;
 
-        private void Start()
-        {
-            //_currentPositionTransform = _cameraPositions[_currentPosition];
-            _currentPositionTransform = _thirdPersonPosition;
+        private bool _isAcceptable = false;
 
+        public void CheckAcceptance()
+        {
+            if (_playerCamera != null && _rigidbody != null && _thirdPersonPosition != null && _bonnetPosition != null)
+            {
+                _isAcceptable = true;
+            }
+            else _isAcceptable = false;
+        }
+
+        private void Awake()
+        {
+            CheckAcceptance();
+        }
+
+        public void SetCamera(Camera camera)
+        {
+            _playerCamera = camera;
+            _currentPositionTransform = _thirdPersonPosition;
+            _playerCamera.transform.position = _currentPositionTransform.position;
+            _playerCamera.transform.rotation = _currentPositionTransform.rotation;
             _playerCamera.transform.SetParent(null);
 
             StartCoroutine(ChangeCameraCheck());
+            CheckAcceptance();
+        }
+
+        public void SetCar(CarComponent car)
+        {
+            _rigidbody = car.GetComponent<Rigidbody>();
+            CheckAcceptance();
         }
 
         private void FixedUpdate()
         {
-            _velocity = _rigidbody.velocity;
-            _playerCamera.transform.position = Vector3.SmoothDamp(_playerCamera.transform.position, _currentPositionTransform.position, ref _velocity, _smoothTime);
-            _playerCamera.transform.rotation = _currentPositionTransform.rotation;
+            if (_isAcceptable)
+            {
+                _velocity = _rigidbody.velocity;
+                _playerCamera.transform.position = Vector3.SmoothDamp(_playerCamera.transform.position, _currentPositionTransform.position, ref _velocity, _smoothTime);
+                _playerCamera.transform.rotation = _currentPositionTransform.rotation;
+            }
         }
 
         private IEnumerator ChangeCameraCheck()
         {
             while (true)
             {
-                if (Input.GetKeyDown(KeyCode.C))
+                if (Input.GetKeyDown(KeyCode.C) && _isAcceptable)
                 {
                     /*
                     _currentPosition++;

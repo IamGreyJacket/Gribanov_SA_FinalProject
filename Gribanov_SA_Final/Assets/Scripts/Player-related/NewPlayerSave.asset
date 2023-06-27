@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbcedb4356a10f34d835e6dfdda63496, type: 3}
   m_Name: NewPlayerSave
   m_EditorClassIdentifier: 
-  TimeAttackIsOpen: 0
-  CircuitIsOpen: 1
-  SoundVolume: 1
+  Info:
+    TimeAttackIsOpen: 0
+    CircuitIsOpen: 0
+    SoundVolume: 1

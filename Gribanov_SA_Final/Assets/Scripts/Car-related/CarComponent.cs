@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Racer
 {
@@ -18,7 +19,7 @@ namespace Racer
         private Rigidbody _rigidbody;
         public float Speed => _rigidbody.velocity.magnitude;
 
-        [SerializeField]
+        [Space, Header("Transmission"), SerializeField]
         private DrivetrainType _drivetrain;
         [SerializeField]
         private bool _isAutomatic = true;
@@ -32,56 +33,76 @@ namespace Racer
         private byte _currentGear = 2; //0 - reverse, 1 - neutral, 2 - first gear, etc.
         public byte CurrentGear => _currentGear;
 
-        [SerializeField, Range(10f, 40f)]
-        private float _maxSteerAngle = 25f;
-        public float MaxSteerAngle => _maxSteerAngle;
-
-        [SerializeField, Min(0)]
+        [Space, Header("Engine"), SerializeField, Min(0)]
         private float _engineTorque = 420f; //todo
-        [SerializeField, Min(1000)]
+        [SerializeField, Min(1200)]
         private float _maxRPM = 4500; //RPM limiter
         private float _engineRPM = 0;
         public float MaxRPM => _maxRPM;
         public float EngineRPM => _engineRPM;
-
         [SerializeField]
         private AnimationCurve _enginePowerCurve = new AnimationCurve();
         private float _currentPower;
 
         private float _wheelsRPM;
 
+        [Space, Header("Handling and braking"), SerializeField, Range(10f, 40f)]
+        private float _maxSteerAngle = 25f;
+        public float MaxSteerAngle => _maxSteerAngle;
         [SerializeField, Range(0f, float.MaxValue), Tooltip("Сила ручного тормоза")]
         private float _handBrakeTorque = float.MaxValue;
         [SerializeField, Range(0f, float.MaxValue), Tooltip("Сила тормозов, при нажатии на педаль тормоза")]
         private float _brakesTorque = float.MaxValue;
+        private bool _isBraking = false;
         [SerializeField]
         private Vector3 _centerOfMass;
+
+        [Space, Header("Visuals"), SerializeField]
+        private Image[] _tailLightsImages;
+        [SerializeField]
+        private Light[] _tailLights;
+        private float _alphaBeforeChanging;
+        private float _lightInstensityBeforeChanging;
+
+        private bool _isAcceptable = false;
 
         public bool IsAllowedToMove { get; set; } = false;
 
         private void FixedUpdate()
         {
-            _wheels.UpdateVisual(_input.Rotate * _maxSteerAngle);
-            OnBrake();
-
-            //todo insert RPM calculator
-            UpdateWheelsRPM();
-            UpdateEngineRPM();
-            if (IsAllowedToMove)
+            if (_isAcceptable)
             {
-                _currentPower = _input.Acceleration * (_enginePowerCurve.Evaluate(_engineRPM) * _gears[_currentGear]);
-                if (_currentPower < 0) _currentPower /= 2; //todo since there will be a reverse gear
-                for (int i = 0; i < _driveWheels.Length; i++)
+                _wheels.UpdateVisual(_input.Rotate * _maxSteerAngle);
+                OnBrake();
+
+                //todo insert RPM calculator
+                UpdateWheelsRPM();
+                UpdateEngineRPM();
+                if (IsAllowedToMove)
                 {
-                    //
-                    _driveWheels[i].motorTorque = _currentPower;
+                    if (_input.Acceleration < 0 && _currentGear != 0)
+                    {
+                        _currentGear = 0;
+                        OnGearChangeEvent?.Invoke();
+                    }
+                    else if (_input.Acceleration > 0 && _currentGear < 2)
+                    {
+                        _currentGear = 2;
+                        OnGearChangeEvent?.Invoke();
+                    }
+                    _currentPower = _input.Acceleration * (_enginePowerCurve.Evaluate(_engineRPM) * _gears[_currentGear]);
+                    //if (_currentPower < 0) _currentPower /= 2; //todo since there will be a reverse gear
+                    for (int i = 0; i < _driveWheels.Length; i++)
+                    {
+                        _driveWheels[i].motorTorque = _currentPower;
+                    }
                 }
             }
         }
 
         private void UpdateEngineRPM()
         {
-            float velocity = 0.0f;
+            float velocity = _rigidbody.velocity.magnitude;
             _engineRPM = Mathf.SmoothDamp(_engineRPM, 800 + (Mathf.Abs(_wheelsRPM) * 3.6f * (_gears[_currentGear])), ref velocity, 0.05f);
             if (_engineRPM >= _maxRPM) _engineRPM = _maxRPM;
         }
@@ -98,26 +119,49 @@ namespace Racer
 
         private void OnGearChange(bool value)
         {
-            if (IsAllowedToMove)
+            switch (value)
             {
-                switch (value)
-                {
-                    case true:
-                        if (_currentGear + 1 >= _gears.Length) return;
-                        _currentGear++;
-                        break;
-                    case false:
-                        if (_currentGear - 1 < 0) return;
-                        _currentGear--;
-                        break;
-                }
-                OnGearChangeEvent?.Invoke();
+                case true:
+                    if (_currentGear + 1 >= _gears.Length) return;
+                    _currentGear++;
+                    break;
+                case false:
+                    if (_currentGear - 1 < 0) return;
+                    _currentGear--;
+                    break;
             }
+            OnGearChangeEvent?.Invoke();
         }
 
         private void OnBrake()
         {
-            for(int i = 0; i < 2; i++)
+            if (_input.Brakes == 0f && _isBraking == true)
+            {
+                _isBraking = false;
+                //погасить фары
+                for (int i = 0; i < _tailLightsImages.Length; i++)
+                {
+                    var color = _tailLightsImages[i].color;
+                    color.a = _alphaBeforeChanging;
+                    _tailLightsImages[i].color = color;
+                    _tailLights[i].intensity = _lightInstensityBeforeChanging;
+                }
+            }
+            else if (_input.Brakes >= 0.05f && _isBraking == false)
+            {
+                _isBraking = true;
+                //подсветить фары
+                for (int i = 0; i < _tailLightsImages.Length; i++)
+                {
+                    var color = _tailLightsImages[i].color;
+                    _alphaBeforeChanging = color.a;
+                    color.a = 1f;
+                    _tailLightsImages[i].color = color;
+                    _lightInstensityBeforeChanging = _tailLights[i].intensity;
+                    _tailLights[i].intensity *= 2;
+                }
+            }
+            for (int i = 0; i < 2; i++)
             {
                 _wheels.GetFrontWheels[i].brakeTorque = _input.Brakes * _brakesTorque;
             }
@@ -161,7 +205,7 @@ namespace Racer
             {
                 if (_isAutomatic)
                 {
-                    if ((_currentGear != _gears.Length - 1 | _currentGear != 0) && _engineRPM > 4300)
+                    if ((_currentGear != _gears.Length - 1 & _currentGear != 0) && _engineRPM > _maxRPM - 200)
                     {
                         OnGearChange(true);
                         yield return new WaitForSeconds(.5f);
@@ -189,10 +233,14 @@ namespace Racer
             _wheels = GetComponent<WheelsComponent>();
             _rigidbody = GetComponent<Rigidbody>();
 
-            _input.OnGearboxEvent += OnGearChange;
             OnGearChangeEvent += PowerDelay;
-            _input.OnHandbrakeEvent += OnHandBrake;
-            _input.OnFlipEvent += OnFlip;
+            if (_input != null)
+            {
+                _input.OnGearboxEvent += OnGearChange;
+                _input.OnHandbrakeEvent += OnHandBrake;
+                _input.OnFlipEvent += OnFlip;
+                _isAcceptable = true;
+            }
         }
         private void Start()
         {
@@ -217,10 +265,13 @@ namespace Racer
 
         private void OnDestroy()
         {
-            _input.OnFlipEvent -= OnFlip;
-            _input.OnHandbrakeEvent -= OnHandBrake;
             OnGearChangeEvent -= PowerDelay;
-            _input.OnGearboxEvent -= OnGearChange;
+            if (_input != null)
+            {
+                _input.OnFlipEvent -= OnFlip;
+                _input.OnHandbrakeEvent -= OnHandBrake;
+                _input.OnGearboxEvent -= OnGearChange;
+            }
         }
     }
 

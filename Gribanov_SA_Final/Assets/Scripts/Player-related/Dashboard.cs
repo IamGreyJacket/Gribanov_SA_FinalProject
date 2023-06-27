@@ -34,11 +34,6 @@ namespace Racer.Player
         [Space, SerializeField]
         private CarComponent _car;
 
-        private bool CheckAcceptance()
-        {
-            return false;
-        }
-
         private bool _isAcceptable = false;
         private void Start()
         {
@@ -51,11 +46,43 @@ namespace Racer.Player
             }
         }
 
+        private void Awake()
+        {
+            CheckAcceptance();
+        }
+
         private void FixedUpdate()
         {
-            UpdateSpeed();
-            UpdateRPM();
-            UpdateRPMNeedle();
+            if (_isAcceptable)
+            {
+                UpdateSpeed();
+                UpdateRPM();
+                UpdateRPMNeedle();
+            }
+        }
+
+        public void CheckAcceptance()
+        {
+            if (_speedText != null && _car != null)
+            {
+                if (_isAcceptable == false)
+                {
+                    _isAcceptable = true;
+                    _maxRPM = _car.MaxRPM;
+                    _car.OnGearChangeEvent += UpdateGears;
+                    UpdateGears();
+                }
+            }
+            else
+            {
+                _isAcceptable = false;
+            }
+        }
+
+        public void SetCar(CarComponent car)
+        {
+            _car = car;
+            CheckAcceptance();
         }
 
         private void UpdateRPM()

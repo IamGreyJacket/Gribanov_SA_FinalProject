@@ -3,7 +3,26 @@ guid: 136dd4cfb8caf294da0e2172e31ff9a3
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PlayerSave: {fileID: 11400000, guid: bf4d779db12e3f042936f0c5fba3f399, type: 2}
+  - _trackManager: {instanceID: 0}
+  - _botManager: {instanceID: 0}
+  - _resultsManager: {instanceID: 0}
+  - _saveManager: {instanceID: 0}
+  - _menuManager: {instanceID: 0}
+  - _audioManager: {instanceID: 0}
+  - _ladaPlayerCarPrefab: {fileID: 4016962661690168086, guid: 928c3216e48714a4b9a9a0b1483b51e6,
+      type: 3}
+  - _uazPlayerCarPrefab: {fileID: 2754090887209779308, guid: a03d283c3cc6ae847944466591c0b764,
+      type: 3}
+  - _volgaPlayerCarPrefab: {fileID: 7383859040191755070, guid: e1008df160b59f24d9e85e004f853da6,
+      type: 3}
+  - _ladaBotCarPrefab: {fileID: 8837224459093297103, guid: 895edf947dcd180489daa94ec9afdc90,
+      type: 3}
+  - _uazBotCarPrefab: {fileID: 4513194815885591630, guid: 62f2f856274da4047a7a7001bd8a103f,
+      type: 3}
+  - _volgaBotCarPrefab: {fileID: 1803072606598554122, guid: c7b8aa1bc6c988f45b247b9f6b655515,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
