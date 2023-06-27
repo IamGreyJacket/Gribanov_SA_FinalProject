@@ -35,6 +35,7 @@ namespace Racer.Managers
                         text += "Congratulations! You have beaten the target time!";
                         //побил время
                         GameManager.Self.PlayerSave.Info.CircuitIsOpen = true;//todo
+                        GameManager.Self.SaveGame();
                     }
                     else
                     {

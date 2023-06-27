@@ -24,8 +24,8 @@ namespace Racer.Managers
                 Debug.Log("Something is wrong with input field");
                 return;
             }
-            if(Convert.ToInt32(laps) <= 0)
-            _laps = Convert.ToByte(laps);
+            if (Convert.ToInt32(laps) <= 0) _laps = Convert.ToByte(1);
+            else _laps = Convert.ToByte(laps);
             Debug.Log($"Laps: {_laps}");
         }
 
@@ -250,6 +250,7 @@ namespace Racer.Managers
             if (_audioManager != null)
             {
                 _audioManager.SetVolume(PlayerSave.Info.SoundVolume);
+                SaveGame();
             }
         }
     }

@@ -36,8 +36,13 @@ PrefabInstance:
     - target: {fileID: 564027892093382538, guid: 3912400d637d24247a5063bb62fb6308,
         type: 3}
       propertyPath: m_Name
-      value: car_5_blue
+      value: bot_car_5_blue
       objectReference: {fileID: 0}
+    - target: {fileID: 666343439606013132, guid: 3912400d637d24247a5063bb62fb6308,
+        type: 3}
+      propertyPath: _input
+      value: 
+      objectReference: {fileID: 6463980525702733419}
     - target: {fileID: 907480606602114352, guid: 3912400d637d24247a5063bb62fb6308,
         type: 3}
       propertyPath: m_LocalPosition.x

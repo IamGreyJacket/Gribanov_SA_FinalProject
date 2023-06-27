@@ -9,10 +9,6 @@ namespace Racer.AI
         [Header("Bot-related"), SerializeField]
         private BotCheckpoint[] _botCheckpoints;
 
-        [Header("Spawn-related"), SerializeField]
-        private Managers.SpawnManager _spawnManager;
-        public GameObject CarToSpawn { get; set; }
-
         private BotCarController[] _bots;
 
         private void Awake()

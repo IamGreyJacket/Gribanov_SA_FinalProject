@@ -1559,7 +1559,7 @@ PrefabInstance:
     - target: {fileID: 7846978153586875685, guid: c7b8aa1bc6c988f45b247b9f6b655515,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00001549741
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7846978153586875685, guid: c7b8aa1bc6c988f45b247b9f6b655515,
         type: 3}
@@ -2786,7 +2786,7 @@ PrefabInstance:
     - target: {fileID: 9152290588514954803, guid: 895edf947dcd180489daa94ec9afdc90,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000016271615
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9152290588514954803, guid: 895edf947dcd180489daa94ec9afdc90,
         type: 3}
@@ -3951,7 +3951,6 @@ MonoBehaviour:
   - {fileID: 607328990}
   - {fileID: 1655297899}
   - {fileID: 316354917}
-  _spawnManager: {fileID: 1645045358}
 --- !u!114 &1645045358
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ namespace Racer.AI
         {
             
 #if UNITY_EDITOR
-            //StartCoroutine(Debugger());
+            StartCoroutine(Debugger());
 #endif
         }
         private void FixedUpdate()
@@ -74,7 +74,7 @@ namespace Racer.AI
         {
             while (true)
             {
-                Debug.Log($"Acceleration: {Acceleration} | Steering: {Rotate} | Brakes: {Brakes}" +
+                Debug.Log($"Acceleration: {Acceleration} | Steering: {Rotate} | Brakes: {Brakes} | AllowedToMove: {_car.IsAllowedToMove} | IsCutoff: {_isCutoff}" +
                     $"\nCheckpoint: {_botCheckpoints[_currentCheckpoint].name}");
                 yield return new WaitForSeconds(1f);
             }

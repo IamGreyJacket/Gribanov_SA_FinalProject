@@ -26,8 +26,10 @@ namespace Racer.Player
 
         private void Awake()
         {
-            _playerJudge.CollectedCheckpointEvent += UpdateRaceInfo;
-            _playerJudge.FinishedLapEvent += UpdateRaceInfo;
+            if (_playerJudge != null)
+            {
+                EnableScript();
+            }
         }
 
         private void Start()
@@ -37,6 +39,20 @@ namespace Racer.Player
 
         private void OnDestroy()
         {
+            if (_playerJudge != null)
+            {
+                DisableScript();
+            }
+        }
+
+        public void EnableScript()
+        {
+            _playerJudge.CollectedCheckpointEvent += UpdateRaceInfo;
+            _playerJudge.FinishedLapEvent += UpdateRaceInfo;
+        }
+
+        public void DisableScript()
+        {
             _playerJudge.CollectedCheckpointEvent -= UpdateRaceInfo;
             _playerJudge.FinishedLapEvent -= UpdateRaceInfo;
         }
@@ -44,13 +60,18 @@ namespace Racer.Player
         public void SetJudge(Judge judge)
         {
             _playerJudge = judge;
+            EnableScript();
+            UpdateRaceInfo();
         }
 
         private void UpdateRaceInfo()
         {
-            if (_playerJudge.GetLapsDone >= _playerJudge.TotalLaps) _lapsCounter.text = $"Laps: {_playerJudge.TotalLaps} / {_playerJudge.TotalLaps}";
-            else _lapsCounter.text = $"Laps: {_playerJudge.GetLapsDone + 1} / {_playerJudge.TotalLaps}";
-            _checkpointsCounter.text = $"Checkpoints {_playerJudge.CheckpointsCounter} / {_playerJudge.TotalCheckpoints}";
+            if (_playerJudge != null)
+            {
+                if (_playerJudge.GetLapsDone >= _playerJudge.TotalLaps) _lapsCounter.text = $"Laps: {_playerJudge.TotalLaps} / {_playerJudge.TotalLaps}";
+                else _lapsCounter.text = $"Laps: {_playerJudge.GetLapsDone + 1} / {_playerJudge.TotalLaps}";
+                _checkpointsCounter.text = $"Checkpoints {_playerJudge.CheckpointsCounter} / {_playerJudge.TotalCheckpoints}";
+            }
         }
 
         private void UpdateStopwatch()

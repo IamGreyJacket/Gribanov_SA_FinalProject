@@ -25,13 +25,13 @@ namespace Racer.Managers
                 {
                     var visuals = carClone.GetComponent<VisualTuningComponent>();
                     visuals.SetSpoilerMeshFromID(GameManager.Self.PlayerSave.Info.SpoilerID);
-                    visuals.SetWheelMeshFromID(GameManager.Self.PlayerSave.Info.SpoilerID, GameManager.Self.PlayerSave.Info.WheelsScale);
+                    visuals.SetWheelMeshFromID(GameManager.Self.PlayerSave.Info.WheelsID, GameManager.Self.PlayerSave.Info.WheelsScale);
                     var cameraController = carClone.GetComponent<Player.CameraController>();
                     cameraController.SetCar(carClone);
                     cameraController.SetCamera(Camera.main);
                     Camera.main.GetComponent<Player.Dashboard>().SetCar(carClone);
                     Camera.main.GetComponentInChildren<MinimapComponent>().SetCar(carClone);
-                    var raceHUD = Camera.main.GetComponentInChildren<Player.RaceHUD>();
+                    var raceHUD = Camera.main.GetComponent<Player.RaceHUD>();
                     if (raceHUD != null) raceHUD.SetJudge(carClone.GetComponent<Assistants.Judge>());
 
                 }

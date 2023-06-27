@@ -177,6 +177,8 @@ namespace Racer.Menu
             
             LoadLevel("FreeroamScene");
             PlayerSave.Info.TimeAttackIsOpen = true;
+            PlayerSave.Info.TuningIsOpen = true;
+            Managers.GameManager.Self.SaveGame();
             //just loads FreeroamScene
         }
 
