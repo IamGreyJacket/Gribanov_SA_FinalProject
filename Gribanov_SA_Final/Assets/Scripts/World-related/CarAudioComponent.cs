@@ -57,6 +57,13 @@ namespace Racer.Managers.Assistants
             _bodyAudioSource.PlayOneShot(_crashAudio);
         }
 
+        public void SetVolume(float volume)
+        {
+            _engineAudioSource.volume = volume;
+            _bodyAudioSource.volume = volume;
+            _wheelsAudioSource.volume = volume;
+        }
+
         private void CalculatePitch()
         {
             var engineRPMRatio = _car.EngineRPM / _car.MaxRPM; //значение не нулевое

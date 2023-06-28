@@ -65,8 +65,10 @@ namespace Racer
         private float _lightInstensityBeforeChanging;
 
         private bool _isAcceptable = false;
+        private bool _canFlip = true;
 
         public bool IsAllowedToMove { get; set; } = false;
+        private bool _brakesLocked = true;
 
         private void FixedUpdate()
         {
@@ -95,6 +97,13 @@ namespace Racer
                     for (int i = 0; i < _driveWheels.Length; i++)
                     {
                         _driveWheels[i].motorTorque = _currentPower;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < _driveWheels.Length; i++)
+                    {
+                        _driveWheels[i].motorTorque = 0;
                     }
                 }
             }
@@ -161,9 +170,28 @@ namespace Racer
                     _tailLights[i].intensity *= 2;
                 }
             }
-            for (int i = 0; i < 2; i++)
+            if (IsAllowedToMove)
             {
-                _wheels.GetFrontWheels[i].brakeTorque = _input.Brakes * _brakesTorque;
+                if (_brakesLocked)
+                {
+                    for (int i = 0; i < _wheels.GetAllWheels.Length; i++)
+                    {
+                        _wheels.GetAllWheels[i].brakeTorque = 0;
+                    }
+                    _brakesLocked = false;
+                }
+                for (int i = 0; i < 2; i++)
+                {
+                    _wheels.GetFrontWheels[i].brakeTorque = _input.Brakes * _brakesTorque;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < _wheels.GetAllWheels.Length; i++)
+                {
+                    _wheels.GetAllWheels[i].brakeTorque = _handBrakeTorque;
+                }
+                _brakesLocked = true;
             }
         }
 
@@ -187,11 +215,30 @@ namespace Racer
 
         private void OnFlip()
         {
-            var pos = transform.position;
-            pos.y += 1;
-            transform.position = pos;
-            transform.Rotate(new Vector3(0, 0, 180));
+            if (_canFlip)
+            {
+                var vector = transform.position;
+                vector.y += 1;
+                _rigidbody.velocity = Vector3.zero;
+                transform.position = vector;
+                vector = transform.eulerAngles;
+                vector.z = 0;
+                transform.eulerAngles = vector;
+                StartCoroutine(FlipDelay());
+            }
+        }
 
+        private IEnumerator FlipDelay()
+        {
+            _canFlip = false;
+            var time = 2f;
+            while (time > 0)
+            {
+                time -= Time.deltaTime;
+                yield return null;
+            }
+            _canFlip = true;
+            yield return null;
         }
 
         private void PowerDelay()

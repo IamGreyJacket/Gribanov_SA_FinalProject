@@ -33,7 +33,12 @@ namespace Racer.Managers
             SetAudioSources();
         }
 
-        public void SetVolume(float volume) => _soundVolume = volume;
+        public void SetVolume(float volume)
+        {
+            _soundVolume = volume;
+            GetAudioSources();
+            SetAudioSources();
+        }
         
 
         public void GetAudioSources()

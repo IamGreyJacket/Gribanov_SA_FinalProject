@@ -14,27 +14,6 @@ namespace Racer.Managers
 
         public event Action OnEscapeEvent;
 
-        private byte _laps = 1;
-        private byte _bots;
-
-        public void SetLaps(string laps)
-        {
-            if(laps == "" && laps == null)
-            {
-                Debug.Log("Something is wrong with input field");
-                return;
-            }
-            if (Convert.ToInt32(laps) <= 0) _laps = Convert.ToByte(1);
-            else _laps = Convert.ToByte(laps);
-            Debug.Log($"Laps: {_laps}");
-        }
-
-        public void SetBots(string bots)
-        {
-            _bots = Convert.ToByte(bots);
-            Debug.Log($"Bots: {_bots}");
-        }
-
         public Player.PlayerSaveSO PlayerSave;
 
         public static GameManager Self { get; private set; }
@@ -167,9 +146,9 @@ namespace Racer.Managers
         {
             if (_trackManager != null)
             {
-                _trackManager.Laps = _laps;
                 if (_trackManager.RaceType == RaceType.TimeAttack) _trackManager.Laps = 3;
-                Debug.Log($"_trackManager.Laps: {_trackManager.Laps}. _laps: {_laps}");
+                else if (_trackManager.RaceType == RaceType.Circuit) _trackManager.Laps = 3;
+                Debug.Log($"_trackManager.Laps: {_trackManager.Laps}");
                 _trackManager.PlayerCar = PlayerCar;
                 if (PlayerCar == null) _trackManager.PlayerCar = _ladaPlayerCarPrefab;
                 _trackManager.PrepareForRace();

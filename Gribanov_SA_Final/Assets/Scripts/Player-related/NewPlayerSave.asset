@@ -15,4 +15,9 @@ MonoBehaviour:
   Info:
     TimeAttackIsOpen: 0
     CircuitIsOpen: 0
+    CarID: 0
+    TuningIsOpen: 0
+    WheelsID: 0
+    WheelsScale: {x: 100, y: 100, z: 100}
+    SpoilerID: 0
     SoundVolume: 1
