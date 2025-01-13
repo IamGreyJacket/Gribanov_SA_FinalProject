@@ -48,6 +48,11 @@ namespace Racer.Managers.Assistants
         public float TimeToBeat => _timeToBeat;
         #endregion
 
+        private void Awake()
+        {
+            _car.IsAllowedToMove = false;
+        }
+
         public void StartRace()
         {
             _car.IsAllowedToMove = true;

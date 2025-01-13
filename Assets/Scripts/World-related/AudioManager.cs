@@ -8,7 +8,8 @@ namespace Racer.Managers
     {
         private float _soundVolume = 1f;
 
-        private AudioSource[] _audioSources;
+        private List<AudioSource> _audioSources;
+        private Dictionary<AudioSource, float> _originalVolume = new Dictionary<AudioSource, float>();
 
         public static AudioManager Self { get; set; }
 
@@ -27,7 +28,22 @@ namespace Racer.Managers
             }
         }
 
-        private void OnLevelWasLoaded(int level)
+        private void OnEnable()
+        {
+            GameManager.Self.LevelLoaded += OnLevelLoaded;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.Self.LevelLoaded -= OnLevelLoaded;
+        }
+
+        public void SaveAudioSource(AudioSource source)
+        {
+            _originalVolume.Add(source, source.volume);
+        }
+
+        private void OnLevelLoaded()
         {
             GetAudioSources();
             SetAudioSources();
@@ -43,14 +59,21 @@ namespace Racer.Managers
 
         public void GetAudioSources()
         {
-            _audioSources = FindObjectsOfType<AudioSource>();
+            _audioSources = new List<AudioSource>(FindObjectsOfType<AudioSource>());
+            _originalVolume.Clear();
         }
 
         public void SetAudioSources()
         {
             foreach(var source in _audioSources)
             {
-                source.volume = _soundVolume;
+                if (!_originalVolume.TryGetValue(source, out var original))
+                {
+                    _originalVolume.Add(source, source.volume);
+                    original = _originalVolume[source];
+                }
+
+                source.volume = original * _soundVolume;
                 Debug.Log($"{source.gameObject.name} volume is {source.volume}. AudioManager's volume is: {_soundVolume}");
             }
         }

@@ -42,14 +42,19 @@ namespace Racer.Managers.Assistants
             {
                 _isAcceptable = true;
                 Debug.Log("Yes Audio Source");
+                AudioManager.Self.GetAudioSources();
+                AudioManager.Self.SetAudioSources();
             }
         }
+
 
         private void Update()
         {
             if (!_isAcceptable) return;
+            var lastPitch = _engineAudioSource.pitch;
+            var velocity = 0f;
             CalculatePitch();
-            _engineAudioSource.pitch = _audioPitch;
+            _engineAudioSource.pitch = Mathf.SmoothDamp(lastPitch, _audioPitch, ref velocity, .1f);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -70,12 +75,12 @@ namespace Racer.Managers.Assistants
             _audioPitch = _maxAudioPitch * engineRPMRatio;
             if (_audioPitch < _minAudioPitch || _car.EngineRPM < _idleRPM)
             {
-                _engineAudioSource.clip = _engineIdleAudio;
+                if (_engineAudioSource.clip != _engineIdleAudio) _engineAudioSource.clip = _engineIdleAudio;
                 _audioPitch = _idlePitch;
             }
             else
             {
-                _engineAudioSource.clip = _engineRunningAudio; //
+                if(_engineAudioSource.clip != _engineRunningAudio) _engineAudioSource.clip = _engineRunningAudio; //
             }
             if (!_engineAudioSource.isPlaying) _engineAudioSource.Play();
         }

@@ -20,4 +20,4 @@ MonoBehaviour:
     WheelsID: 0
     WheelsScale: {x: 100, y: 100, z: 100}
     SpoilerID: 0
-    SoundVolume: 1
+    SoundVolume: 0.5

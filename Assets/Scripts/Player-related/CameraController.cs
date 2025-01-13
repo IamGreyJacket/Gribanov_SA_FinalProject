@@ -37,6 +37,7 @@ namespace Racer.Player
             if (_playerCamera != null && _rigidbody != null && _thirdPersonPosition != null && _bonnetPosition != null)
             {
                 _isAcceptable = true;
+                _currentPositionTransform = ThirdPerson;
             }
             else _isAcceptable = false;
         }
@@ -69,7 +70,9 @@ namespace Racer.Player
             if (_isAcceptable)
             {
                 _velocity = _rigidbody.velocity;
-                _playerCamera.transform.position = Vector3.SmoothDamp(_playerCamera.transform.position, _currentPositionTransform.position, ref _velocity, _smoothTime);
+                _playerCamera.transform.position = Vector3.SmoothDamp(_playerCamera.transform.position,
+                    _currentPositionTransform.position, ref _velocity, _smoothTime);
+
                 _playerCamera.transform.rotation = _currentPositionTransform.rotation;
             }
         }

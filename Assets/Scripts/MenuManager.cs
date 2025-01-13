@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 //using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using Racer.Managers;
 
 namespace Racer.Menu
 {
@@ -158,16 +159,9 @@ namespace Racer.Menu
             }
         }
 
-        public async void LoadLevel(string sceneName)
+        public void LoadLevel(string sceneName)
         {
-            //if()
-            var scene = SceneManager.LoadSceneAsync(sceneName);
-            scene.allowSceneActivation = false;
-            while(scene.progress < .9f)
-            {
-                await Task.Delay(100);
-            }
-            scene.allowSceneActivation = true;
+            GameManager.Self.LoadLevel(sceneName);
         }
 
         #region LoadingLevelsFunctions

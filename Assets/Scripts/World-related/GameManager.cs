@@ -13,6 +13,7 @@ namespace Racer.Managers
     {
 
         public event Action OnEscapeEvent;
+        public event Action LevelLoaded;
 
         public Player.PlayerSaveSO PlayerSave;
 
@@ -56,6 +57,7 @@ namespace Racer.Managers
 
         private PlayerControls _controls;
 
+
         private void Awake()
         {
             if (Self == null)
@@ -87,6 +89,16 @@ namespace Racer.Managers
             }
         }
 
+        private void OnEnable()
+        {
+            LevelLoaded += OnLevelLoaded;
+        }
+
+        private void OnDisable()
+        {
+            LevelLoaded -= OnLevelLoaded;
+        }
+
         private void OnDestroy()
         {
             if (_isSelf)
@@ -100,6 +112,7 @@ namespace Racer.Managers
                     _controls.Dispose();
                 }
             }
+
         }
 
         private void OnEscape(InputAction.CallbackContext obj)
@@ -108,13 +121,23 @@ namespace Racer.Managers
             OnEscapeEvent?.Invoke();
         }
 
-        private void OnLevelWasLoaded(int level)
+        private void OnLevelLoaded()
         {
             if (_isSelf)
             {
                 FindManagers();
                 SetManagers();
             }
+        }
+
+        public async void LoadLevel(string sceneName)
+        {
+            var scene = SceneManager.LoadSceneAsync(sceneName);
+            while (!scene.isDone)
+            {
+                await Task.Yield();
+            }
+            LevelLoaded?.Invoke();
         }
 
         public void SetPlayerCar(int carID)
@@ -199,16 +222,10 @@ namespace Racer.Managers
             _trackManager.StartRace();
         }
 
-        public async void LoadMainMenu()
+        public void LoadMainMenu()
         {
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainMenuScene")) return;
-            var scene = SceneManager.LoadSceneAsync("MainMenuScene");
-            scene.allowSceneActivation = false;
-            while (scene.progress < .9f)
-            {
-                await Task.Delay(100);
-            }
-            scene.allowSceneActivation = true;
+            LoadLevel("MainMenuScene");
         }
 
         public void SaveGame()

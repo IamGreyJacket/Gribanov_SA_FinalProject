@@ -60,8 +60,10 @@ namespace Racer.Menu
             if (car != null)
             {
                 carClone = Instantiate(car, point.position, point.rotation);
-                Managers.AudioManager.Self.GetAudioSources();
-                Managers.AudioManager.Self.SetAudioSources();
+
+                //Managers.AudioManager.Self.GetAudioSources();
+                //Managers.AudioManager.Self.SetAudioSources();
+
                 _currentVisualComponent = carClone.GetComponent<VisualTuningComponent>();
                 var options = _wheelsDropdown.options;
                 for (int i = 0; i < _currentVisualComponent.LeftWheelMeshes.Length; i++)

@@ -66,9 +66,9 @@ namespace Racer.Managers
         [SerializeField]
         private int _countdown = 3;
 
-        private Judge[] _judges; //Содержит судей, которым будет раздаваться информация о гонке (круги, чекпойнты и т.д.)
+        private List<Judge> _judges; //Содержит судей, которым будет раздаваться информация о гонке (круги, чекпойнты и т.д.)
 
-        public int OpponentsCount => _judges.Length - 1;
+        public int OpponentsCount => _judges.Count - 1;
 
         private void Awake()
         {
@@ -161,9 +161,9 @@ namespace Racer.Managers
             _finishCarsCounter++;
             if(judge.gameObject.GetComponent<Player.PlayerCarController>() != null)
             {
-                GameManager.Self.ResultsManager.ShowResults(_finishCarsCounter, _judges.Length, _raceType, judge);
+                GameManager.Self.ResultsManager.ShowResults(_finishCarsCounter, _judges.Count, _raceType, judge);
             }
-            Debug.Log($"Car {judge.name} finished {_finishCarsCounter} / {_judges.Length}");
+            Debug.Log($"Car {judge.name} finished {_finishCarsCounter} / {_judges.Count}");
         }
 
         private void SpawnPlayer()
@@ -174,7 +174,7 @@ namespace Racer.Managers
 
         public void GetJudges()
         {
-            _judges = FindObjectsOfType<Judge>();
+            _judges = new List<Judge>(FindObjectsOfType<Judge>());
         }
 
         public void SetJudges()
@@ -182,14 +182,14 @@ namespace Racer.Managers
             switch (_raceType) 
             {
                 case RaceType.TimeAttack: 
-                    for (int i = 0; i < _judges.Length; i++)
+                    for (int i = 0; i < _judges.Count; i++)
                     {
                         _judges[i].SetRaceParams(_checkpoints, Laps, _timeToBeat);
                     }
                     break;
 
                 case RaceType.Circuit:
-                    for (int i = 0; i < _judges.Length; i++)
+                    for (int i = 0; i < _judges.Count; i++)
                     {
                         _judges[i].SetRaceParams(_checkpoints, Laps, 0);
                     }

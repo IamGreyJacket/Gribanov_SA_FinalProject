@@ -21,8 +21,11 @@ namespace Racer.Managers
             {
                 var point = _spawnPoints[_busySpawnPointCount];
                 var carClone = Instantiate(car, point.position, point.rotation);
-                AudioManager.Self.GetAudioSources();
-                AudioManager.Self.SetAudioSources();
+
+                //todo
+                //AudioManager.Self.GetAudioSources();
+                //AudioManager.Self.SetAudioSources();
+
                 if (carClone.GetComponent<Player.PlayerCarController>() != null)
                 {
                     var visuals = carClone.GetComponent<VisualTuningComponent>();

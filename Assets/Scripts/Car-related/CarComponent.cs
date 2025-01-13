@@ -67,7 +67,7 @@ namespace Racer
         private bool _isAcceptable = false;
         private bool _canFlip = true;
 
-        public bool IsAllowedToMove { get; set; } = false;
+        public bool IsAllowedToMove { get; set; } = true;
         private bool _brakesLocked = true;
 
         private void FixedUpdate()
@@ -77,7 +77,6 @@ namespace Racer
                 _wheels.UpdateVisual(_input.Rotate * _maxSteerAngle);
                 OnBrake();
 
-                //todo insert RPM calculator
                 UpdateWheelsRPM();
                 UpdateEngineRPM();
                 if (IsAllowedToMove)
@@ -111,8 +110,8 @@ namespace Racer
 
         private void UpdateEngineRPM()
         {
-            float velocity = _rigidbody.velocity.magnitude;
-            _engineRPM = Mathf.SmoothDamp(_engineRPM, 800 + (Mathf.Abs(_wheelsRPM) * 3.6f * (_gears[_currentGear])), ref velocity, 0.05f);
+            float velocity = 0f;//_rigidbody.velocity.magnitude;
+            _engineRPM = Mathf.SmoothDamp(_engineRPM, 800 + (Mathf.Abs(_wheelsRPM) * 3.6f * (_gears[_currentGear])), ref velocity, 0.1f);
             if (_engineRPM >= _maxRPM) _engineRPM = _maxRPM;
         }
 
