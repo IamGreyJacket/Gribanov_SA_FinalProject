@@ -76,6 +76,7 @@ namespace Racer.Player
 
         private void UpdateStopwatch()
         {
+            if (_playerJudge == null) return;
             var currentTime = _playerJudge.CurrentRaceTime;
             TimeSpan time = TimeSpan.FromSeconds(currentTime);
             int minutes = (int)time.TotalMinutes;
