@@ -16,7 +16,8 @@ MonoBehaviour:
   _rigidbody: {fileID: 1788124721395488428}
   _thirdPersonPosition: {fileID: 768496743107446162}
   _bonnetPosition: {fileID: 5449537837734098536}
-  _smoothTime: 0.025
+  _positionSmoothTime: 0.5
+  _rotationSmoothTime: 0.5
 --- !u!114 &2232545432098204558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +86,11 @@ PrefabInstance:
       propertyPath: _input
       value: 
       objectReference: {fileID: 5617591191082267980}
+    - target: {fileID: 1718314219177053083, guid: 33d5f8711cf08e64b82fde9564015500,
+        type: 3}
+      propertyPath: _useUniTask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3974246691059722516, guid: 33d5f8711cf08e64b82fde9564015500,
         type: 3}
       propertyPath: m_AllowMSAA

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 namespace Racer
 {
@@ -17,6 +18,8 @@ namespace Racer
         private WheelsComponent _wheels;
         private WheelCollider[] _driveWheels;
         private Rigidbody _rigidbody;
+
+        public Rigidbody Rigidbody => _rigidbody;
         public float Speed => _rigidbody.velocity.magnitude;
 
         [Space, Header("Transmission"), SerializeField]
@@ -69,6 +72,9 @@ namespace Racer
 
         public bool IsAllowedToMove { get; set; } = true;
         private bool _brakesLocked = true;
+
+        [Header("Debug")]
+        [SerializeField] private bool _useUniTask = false;
 
         private void FixedUpdate()
         {
@@ -245,6 +251,23 @@ namespace Racer
             StartCoroutine(_input.PowerDelay(_powerDelay));
         }
 
+        private async UniTask AutoGearboxUni()
+        {
+            while (true)
+            {
+                if (_isAutomatic)
+                {
+                    if ((_currentGear != _gears.Length - 1 & _currentGear != 0) && _engineRPM > _maxRPM - 200)
+                    {
+                        OnGearChange(true);
+                        await UniTask.Delay(500);
+                    }
+                    else if (_engineRPM < _gearDownRPM && _currentGear > 2) OnGearChange(false);
+                    await UniTask.Delay(250);
+                }
+            }
+        }
+
         private IEnumerator AutoGearbox()
         {
             while (true)
@@ -306,7 +329,9 @@ namespace Racer
             _rigidbody.centerOfMass = _centerOfMass;
 
             _currentGear = 2;
-            StartCoroutine(AutoGearbox());
+
+            if (_useUniTask) AutoGearboxUni().Forget();
+            else StartCoroutine(AutoGearbox());
         }
 
         private void OnDestroy()

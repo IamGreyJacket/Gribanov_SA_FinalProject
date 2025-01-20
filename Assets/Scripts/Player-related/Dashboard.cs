@@ -51,14 +51,11 @@ namespace Racer.Player
             CheckAcceptance();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            if (_isAcceptable)
-            {
-                UpdateSpeed();
-                UpdateRPM();
-                UpdateRPMNeedle();
-            }
+            UpdateSpeed();
+            UpdateRPM();
+            UpdateRPMNeedle();
         }
 
         public void CheckAcceptance()
@@ -87,25 +84,24 @@ namespace Racer.Player
 
         private void UpdateRPM()
         {
-            var rpm = (int)_car.EngineRPM;
             //_rpmText.color = Color.Lerp(_minColor, _maxColor, rpm / _maxRPM);
-            _rpmText.text = $"{rpm} RPM";
+            _rpmText.text = $"{(int)_car.EngineRPM} RPM";
         }
 
         private void UpdateRPMNeedle()
         {
-            if (!_isAcceptable) return;
-            var desiredPos = _minRPMRotation - _maxRPMRotation;
-            float temp = _car.EngineRPM / _maxRPM;
-            _rpmNeedle.transform.eulerAngles = new Vector3(0, 0, _minRPMRotation - temp * desiredPos);
+            //if (!_isAcceptable) return;
+            var angles = _rpmNeedle.transform.eulerAngles;
+            angles.z = Mathf.Lerp(_minRPMRotation, _maxRPMRotation, _car.EngineRPM / _car.MaxRPM);
+            _rpmNeedle.transform.eulerAngles = angles;
         }
 
         private void UpdateSpeed()
         {
-            if (!_isAcceptable) return;
-            var speed = (float)System.Math.Round(_car.Speed * c_convertMeterPerSecToKmPH, 0);
+            //if (!_isAcceptable) return;
+            var speed = Mathf.Round(_car.Speed * c_convertMeterPerSecToKmPH);
             _speedText.color = Color.Lerp(_minColor, _maxColor, speed / _maxSpeed);
-            _speedText.text = $"{speed} km/h";
+            _speedText.text = $"{(int)speed} km/h";
         }
 
         private void UpdateGears()
