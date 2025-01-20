@@ -1,2 +1,6 @@
 # Gribanov_SA_FinalProject
-После загрузки проекта нужно будет добавить в иерархию сцены MainMenuScene, FreeroamScene, TimeAttack и RacetrackScene. Необходимо оставить в активном состоянии только сцену MainMenuScene, остальные отключить но не удалять из иерархии.
+Unity Editor version: 2019.4.1f1
+
+Playable build: https://drive.google.com/file/d/1PSg0himUg9QYUpZXI2JtOo62jZnemtKj/view?usp=drive_link
+
+To play it from the Unity Editor just open the MainMenuScene.
