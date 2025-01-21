@@ -99,7 +99,7 @@ namespace Racer.Player
         private void UpdateSpeed()
         {
             //if (!_isAcceptable) return;
-            var speed = Mathf.Round(_car.Speed * c_convertMeterPerSecToKmPH);
+            var speed = Mathf.Round(_car.RawSpeed * c_convertMeterPerSecToKmPH);
             _speedText.color = Color.Lerp(_minColor, _maxColor, speed / _maxSpeed);
             _speedText.text = $"{(int)speed} km/h";
         }

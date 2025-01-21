@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f58a1944a03f91449520e92b37d704f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraSpace: {fileID: 0}
   _playerCamera: {fileID: 0}
-  _rigidbody: {fileID: 1788124721395488428}
   _thirdPersonPosition: {fileID: 768496743107446162}
   _bonnetPosition: {fileID: 5449537837734098536}
-  _positionSmoothTime: 0.5
-  _rotationSmoothTime: 0.5
+  _positionSmoothTime: 0.6
+  _rotationSmoothTime: 0.95
 --- !u!114 &2232545432098204558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,12 +196,6 @@ PrefabInstance:
 --- !u!1 &1788124721395488427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7597749543563554318, guid: 33d5f8711cf08e64b82fde9564015500,
-    type: 3}
-  m_PrefabInstance: {fileID: 8187562820106369189}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1788124721395488428 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7597749543563554313, guid: 33d5f8711cf08e64b82fde9564015500,
     type: 3}
   m_PrefabInstance: {fileID: 8187562820106369189}
   m_PrefabAsset: {fileID: 0}

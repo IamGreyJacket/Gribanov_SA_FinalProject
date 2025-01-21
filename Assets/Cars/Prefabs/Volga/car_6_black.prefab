@@ -1627,7 +1627,7 @@ MonoBehaviour:
   _powerDelay: 0.2
   _gearDownRPM: 2750
   _gears:
-  - 2
+  - -2
   - 0
   - 2
   - 1.3
@@ -1697,6 +1697,7 @@ MonoBehaviour:
   _tailLights:
   - {fileID: 2649030975487642228}
   - {fileID: 8458875064760399107}
+  _useUniTask: 0
 --- !u!114 &7016915811718134121
 MonoBehaviour:
   m_ObjectHideFlags: 0

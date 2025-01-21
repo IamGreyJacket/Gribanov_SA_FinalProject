@@ -51,7 +51,7 @@ namespace Racer.AI
         private void CalculateBraking()
         {
             if (TargetSpeed == -1) return;
-            var speedDifference = _car.Speed * c_convertMeterPerSecToKmPH - TargetSpeed;
+            var speedDifference = _car.RawSpeed * c_convertMeterPerSecToKmPH - TargetSpeed;
             if (speedDifference > 5) Brakes = 1f;
             else Brakes = 0f;
         }
@@ -64,7 +64,7 @@ namespace Racer.AI
                 if (_isCutoff) Acceleration = 0f;
                 return;
             }
-            var accel = (_car.Speed * c_convertMeterPerSecToKmPH) / TargetSpeed;
+            var accel = (_car.RawSpeed * c_convertMeterPerSecToKmPH) / TargetSpeed;
             if (Brakes > 0 || accel > 1 || _isCutoff) Acceleration = 0f;
             else if (accel < 1) Acceleration = 1f;
         }
