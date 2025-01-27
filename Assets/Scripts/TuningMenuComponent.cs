@@ -35,7 +35,7 @@ namespace Racer.Menu
             _spoilerDropdown.options = new List<TMP_Dropdown.OptionData>();
             _wheelsDropdown.options = new List<TMP_Dropdown.OptionData>();
             Managers.GameManager.Self.SetPlayerCar(carID);
-            var save = Managers.GameManager.Self.PlayerSave.Info;
+            var save = Managers.GameManager.Self.PlayerSave;
             CarComponent car = null;
             switch (carID)
             {
@@ -110,23 +110,25 @@ namespace Racer.Menu
                 }
                 if (_isSaved == false)
                 {
-                    if (gameManager.PlayerSave.Info.WheelsID == 0 || gameManager.PlayerSave.Info.WheelsID >= _currentVisualComponent.LeftWheelMeshes.Length)
+                    if (gameManager.PlayerSave.WheelsID == 0 || gameManager.PlayerSave.WheelsID >= _currentVisualComponent.LeftWheelMeshes.Length)
                     {
                         _currentVisualComponent.SetWheelMeshFromID(0, new Vector3(100, 100, 100));
-                        gameManager.PlayerSave.Info.WheelsScale = new Vector3(100, 100, 100);
+                        gameManager.PlayerSave.WheelsScale = new Vector3(100, 100, 100);
                     }
                     else
                     {
-                        _currentVisualComponent.SetWheelMeshFromID(gameManager.PlayerSave.Info.WheelsID, _wheelsScale);
-                        gameManager.PlayerSave.Info.WheelsScale = _wheelsScale;
+                        _currentVisualComponent.SetWheelMeshFromID(gameManager.PlayerSave.WheelsID, _wheelsScale);
+                        gameManager.PlayerSave.WheelsScale = _wheelsScale;
                     }
                 }
-                if (gameManager.PlayerSave.Info.SpoilerID >= _currentVisualComponent.SpoilerMeshes.Length) _currentVisualComponent.SetSpoilerMeshFromID(0);
-                else _currentVisualComponent.SetSpoilerMeshFromID(gameManager.PlayerSave.Info.SpoilerID);
+                if (gameManager.PlayerSave.SpoilerID >= _currentVisualComponent.SpoilerMeshes.Length) _currentVisualComponent.SetSpoilerMeshFromID(0);
+                else _currentVisualComponent.SetSpoilerMeshFromID(gameManager.PlayerSave.SpoilerID);
 
                 SaveChanges();
                 _isSaved = true;
-                Debug.Log($"WheelsID: {gameManager.PlayerSave.Info.WheelsID} | WheelsScale: {gameManager.PlayerSave.Info.WheelsScale} | SpoilerID: {gameManager.PlayerSave.Info.SpoilerID}");
+                Debug.Log($"WheelsID: {gameManager.PlayerSave.WheelsID} |" +
+                    $" WheelsScale: {gameManager.PlayerSave.WheelsScale} |" +
+                    $" SpoilerID: {gameManager.PlayerSave.SpoilerID}");
                 _spoilerDropdown.options = new List<TMP_Dropdown.OptionData>();
                 _wheelsDropdown.options = new List<TMP_Dropdown.OptionData>();
                 Destroy(_currentVisualComponent.gameObject);
@@ -142,14 +144,16 @@ namespace Racer.Menu
                 return;
             }
             //if(доступно)
-            gameManager.PlayerSave.Info.WheelsID = _currentVisualComponent.WheelsCurrentID;
-            if (gameManager.PlayerSave.Info.WheelsID == 0) gameManager.PlayerSave.Info.WheelsScale = new Vector3(100, 100, 100);
-            else gameManager.PlayerSave.Info.WheelsScale = _wheelsScale;
+            gameManager.PlayerSave.WheelsID = _currentVisualComponent.WheelsCurrentID;
+            if (gameManager.PlayerSave.WheelsID == 0) gameManager.PlayerSave.WheelsScale = new Vector3(100, 100, 100);
+            else gameManager.PlayerSave.WheelsScale = _wheelsScale;
             //if(доступно)
-            gameManager.PlayerSave.Info.SpoilerID = _currentVisualComponent.SpoilerCurrentID;
+            gameManager.PlayerSave.SpoilerID = _currentVisualComponent.SpoilerCurrentID;
             gameManager.SaveGame();
             _isSaved = true;
-            Debug.Log($"Current WheelID: {_currentVisualComponent.WheelsCurrentID} | WheelsScale: {gameManager.PlayerSave.Info.WheelsScale} | Current SpoilerID: {_currentVisualComponent.SpoilerCurrentID}");
+            Debug.Log($"Current WheelID: {_currentVisualComponent.WheelsCurrentID} |" +
+                $" WheelsScale: {gameManager.PlayerSave.WheelsScale} |" +
+                $" Current SpoilerID: {_currentVisualComponent.SpoilerCurrentID}");
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Racer.Player
 
         private void Update()
         {
+            if (_car == null) return;
             UpdateSpeed();
             UpdateRPM();
             UpdateRPMNeedle();

@@ -50,7 +50,7 @@ namespace Racer.Menu
         //private VisualTuningComponent _currentTuningComponent;
         //public VisualTuningComponent CurrentTuningComponent => _currentTuningComponent;
 
-        public Player.PlayerSaveSO PlayerSave => Managers.GameManager.Self.PlayerSave;
+        public Player.PlayerSaveInfo PlayerSave => Managers.GameManager.Self.PlayerSave;
 
         //public void SetPlayerSave(Player.PlayerSaveSO playerSave) => _playerSave = playerSave;
 
@@ -60,7 +60,7 @@ namespace Racer.Menu
 
         private void Start()
         {
-            _volumeSlider.value = Managers.GameManager.Self.PlayerSave.Info.SoundVolume;
+            _volumeSlider.value = Managers.GameManager.Self.PlayerSave.SoundVolume;
             StartCoroutine(StartScreen());
         }
 
@@ -127,14 +127,14 @@ namespace Racer.Menu
         public void ShowRaces()
         {
             DisableAllWindows();
-            SetCarDropdown(PlayerSave.Info.CarID);
+            SetCarDropdown(PlayerSave.CarID);
             _raceMenuPanel.SetActive(true);
             //Отключает главное меню и показывает варианты гонок в виде кнопок
         }
 
         public void ShowTuning()
         {
-            if (PlayerSave.Info.TuningIsOpen)
+            if (PlayerSave.TuningIsOpen)
             {
                 DisableAllWindows();
                 _carChoiceTuningDropdown.value = 0;
@@ -147,7 +147,7 @@ namespace Racer.Menu
 
         public void ShowCircuitParameters()
         {
-            if (PlayerSave.Info.CircuitIsOpen)
+            if (PlayerSave.CircuitIsOpen)
             {
                 DisableAllWindows();
                 _circuitParametersPanel.SetActive(true);
@@ -170,15 +170,15 @@ namespace Racer.Menu
         {
             
             LoadLevel("FreeroamScene");
-            PlayerSave.Info.TimeAttackIsOpen = true;
-            PlayerSave.Info.TuningIsOpen = true;
+            PlayerSave.TimeAttackIsOpen = true;
+            PlayerSave.TuningIsOpen = true;
             Managers.GameManager.Self.SaveGame();
             //just loads FreeroamScene
         }
 
         public void LoadTimeAttack()
         {
-            if (PlayerSave.Info.TimeAttackIsOpen) LoadLevel("TimeAttack");
+            if (PlayerSave.TimeAttackIsOpen) LoadLevel("TimeAttack");
             else
             {
                 string text = "This race is not availabe for you yet. First you need to complete Freeroam";
@@ -189,7 +189,7 @@ namespace Racer.Menu
 
         public void LoadCircuit()
         {
-            if(PlayerSave.Info.CircuitIsOpen) LoadLevel("RacetrackScene");
+            if(PlayerSave.CircuitIsOpen) LoadLevel("RacetrackScene");
             else 
             {
                 string text = "This race is not availabe for you yet. First you need to complete TimeAttack";

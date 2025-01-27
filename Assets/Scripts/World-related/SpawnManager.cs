@@ -29,8 +29,8 @@ namespace Racer.Managers
                 if (carClone.GetComponent<Player.PlayerCarController>() != null)
                 {
                     var visuals = carClone.GetComponent<VisualTuningComponent>();
-                    visuals.SetSpoilerMeshFromID(GameManager.Self.PlayerSave.Info.SpoilerID);
-                    visuals.SetWheelMeshFromID(GameManager.Self.PlayerSave.Info.WheelsID, GameManager.Self.PlayerSave.Info.WheelsScale);
+                    visuals.SetSpoilerMeshFromID(GameManager.Self.PlayerSave.SpoilerID);
+                    visuals.SetWheelMeshFromID(GameManager.Self.PlayerSave.WheelsID, GameManager.Self.PlayerSave.WheelsScale);
                     var cameraController = carClone.GetComponent<Player.CameraController>();
                     cameraController.SetCar(carClone);
                     cameraController.SetCamera(Camera.main);

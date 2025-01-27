@@ -15,7 +15,7 @@ namespace Racer.Managers
         public event Action OnEscapeEvent;
         public event Action LevelLoaded;
 
-        public Player.PlayerSaveSO PlayerSave;
+        public Player.PlayerSaveInfo PlayerSave { get; private set; }
 
         public static GameManager Self { get; private set; }
         private bool _isSelf = false;
@@ -76,11 +76,16 @@ namespace Racer.Managers
                     var playerSave = _saveManager.GetSave();
                     if (playerSave != null)
                     {
-                        PlayerSave.Info = JsonUtility.FromJson<Player.PlayerSaveInfo>(playerSave);
+                        PlayerSave = JsonUtility.FromJson<Player.PlayerSaveInfo>(playerSave);
+                        SaveGame();
+                    }
+                    else
+                    {
+                        PlayerSave = new Player.PlayerSaveInfo();
                         SaveGame();
                     }
                 }
-                SetPlayerCar(PlayerSave.Info.CarID);
+                SetPlayerCar(PlayerSave.CarID);
                 SetManagers();
             }
             else
@@ -146,19 +151,19 @@ namespace Racer.Managers
             {
                 case 0:
                     PlayerCar = null;
-                    PlayerSave.Info.CarID = carID;
+                    PlayerSave.CarID = carID;
                     break;
                 case 1:
                     PlayerCar = _ladaPlayerCarPrefab;
-                    PlayerSave.Info.CarID = carID;
+                    PlayerSave.CarID = carID;
                     break;
                 case 2:
                     PlayerCar = _uazPlayerCarPrefab;
-                    PlayerSave.Info.CarID = carID;
+                    PlayerSave.CarID = carID;
                     break;
                 case 3:
                     PlayerCar = _volgaPlayerCarPrefab;
-                    PlayerSave.Info.CarID = carID;
+                    PlayerSave.CarID = carID;
                     break;
             }
             Debug.Log($"{carID}, {PlayerCar}");
@@ -191,12 +196,12 @@ namespace Racer.Managers
             if (_menuManager != null)
             {
                 //_menuManager.SetPlayerSave(PlayerSave);
-                _menuManager.SetCarDropdown(PlayerSave.Info.CarID);
+                _menuManager.SetCarDropdown(PlayerSave.CarID);
                 //открывать или закрывать доступ в соответствии с сейвом
             }
             if(_audioManager != null)
             {
-                _audioManager.SetVolume(PlayerSave.Info.SoundVolume);
+                _audioManager.SetVolume(PlayerSave.SoundVolume);
             }
         }
 
@@ -232,7 +237,7 @@ namespace Racer.Managers
         {
             if (_saveManager != null)
             {
-                _saveManager.WriteSave(PlayerSave.Info);
+                _saveManager.WriteSave(PlayerSave);
             }
             else
             {
@@ -242,10 +247,10 @@ namespace Racer.Managers
 
         public void SetVolume(float volume)
         {
-            PlayerSave.Info.SoundVolume = volume;
+            PlayerSave.SoundVolume = volume;
             if (_audioManager != null)
             {
-                _audioManager.SetVolume(PlayerSave.Info.SoundVolume);
+                _audioManager.SetVolume(PlayerSave.SoundVolume);
                 SaveGame();
             }
         }
