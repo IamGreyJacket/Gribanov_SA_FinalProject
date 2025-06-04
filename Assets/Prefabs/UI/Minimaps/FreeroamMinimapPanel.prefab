@@ -413,6 +413,11 @@ PrefabInstance:
       propertyPath: _playerTransform
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3655535307283209705, guid: 3e427dec51aa4b3468efd2b110ab15eb,
+        type: 3}
+      propertyPath: _minimap
+      value: 
+      objectReference: {fileID: 5362961313653621239}
     - target: {fileID: 6421627737867423617, guid: 3e427dec51aa4b3468efd2b110ab15eb,
         type: 3}
       propertyPath: m_IsActive
@@ -420,3 +425,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e427dec51aa4b3468efd2b110ab15eb, type: 3}
+--- !u!224 &5362961313653621239 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3568499172530028327, guid: 3e427dec51aa4b3468efd2b110ab15eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 8928610500356472528}
+  m_PrefabAsset: {fileID: 0}

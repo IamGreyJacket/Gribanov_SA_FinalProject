@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using Racer.AI;
+using Racer.Managers.Assistants;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Racer
 {
@@ -15,14 +18,17 @@ namespace Racer
         [SerializeField]
         private RectTransform _minimapPoint2;
         [SerializeField]
-        private RectTransform _playerArrowOnMinimap;
+        private Image _playerArrowOnMinimap; //can be used as prefab
 
         [Space, SerializeField]
-        private Transform _playerTransform;
+        private Transform _minimap; //inside Canvas
+
+        //
+        private Dictionary<Transform, RectTransform> _participants = new Dictionary<Transform, RectTransform>(); //
 
         private float _minimapRatio;
 
-        private bool _isAcceptable = false;
+        //private bool _isAcceptable = false;
 
         private void Awake()
         {
@@ -31,16 +37,28 @@ namespace Racer
 
         private void LateUpdate()
         {
-            if (_isAcceptable)
+            //if (_isAcceptable)
+            
+            foreach(var part in _participants.Keys)
             {
-                _playerArrowOnMinimap.anchoredPosition = _minimapPoint1.anchoredPosition + new Vector2((_playerTransform.position.x - _worldPoint1.position.x) * _minimapRatio,
-                    (_playerTransform.position.z - _worldPoint1.position.z) * _minimapRatio);
-                var angles = _playerArrowOnMinimap.eulerAngles;
-                angles.z = -_playerTransform.eulerAngles.y;
-                _playerArrowOnMinimap.eulerAngles = angles;
+                var miniArrow = _participants[part];
+                miniArrow.anchoredPosition = _minimapPoint1.anchoredPosition + new Vector2((part.position.x - _worldPoint1.position.x) * _minimapRatio,
+                    (part.position.z - _worldPoint1.position.z) * _minimapRatio);
+                var angles = miniArrow.eulerAngles;
+                angles.z = -part.eulerAngles.y;
+                miniArrow.eulerAngles = angles;
             }
+            /*
+            _playerArrowOnMinimap.anchoredPosition = _minimapPoint1.anchoredPosition + new Vector2((_playerTransform.position.x - _worldPoint1.position.x) * _minimapRatio,
+                (_playerTransform.position.z - _worldPoint1.position.z) * _minimapRatio);
+            var angles = _playerArrowOnMinimap.eulerAngles;
+            angles.z = -_playerTransform.eulerAngles.y;
+            _playerArrowOnMinimap.eulerAngles = angles;
+            */
+            
         }
 
+        /*
         public void CheckAcceptance()
         {
             if (_playerTransform != null)
@@ -52,12 +70,29 @@ namespace Racer
                 _isAcceptable = false;
             }
         }
+        */
 
+        public void FindParticipants()
+        {
+            var participants = FindObjectsOfType<Judge>();
+            foreach(var part in participants)
+            {
+                var miniArrow = Instantiate(_playerArrowOnMinimap, _minimap);
+                if(part.GetComponent<BaseController>().GetType() == typeof(BotCarController))
+                {
+                    miniArrow.color = Color.red;
+                }
+                _participants.Add(part.transform, miniArrow.rectTransform);
+            }
+        }
+
+        /*
         public void SetCar(CarComponent car)
         {
             _playerTransform = car.transform;
             CheckAcceptance();
         }
+        */
 
         private void CalculateMapRatio()
         {

@@ -48,13 +48,11 @@ namespace Racer.Managers.Assistants
         }
 
 
-        private void Update()
+        private void LateUpdate()
         {
             if (!_isAcceptable) return;
-            var lastPitch = _engineAudioSource.pitch;
-            var velocity = 0f;
             CalculatePitch();
-            _engineAudioSource.pitch = Mathf.SmoothDamp(lastPitch, _audioPitch, ref velocity, .1f);
+            _engineAudioSource.pitch = _audioPitch;
         }
 
         private void OnCollisionEnter(Collision collision)

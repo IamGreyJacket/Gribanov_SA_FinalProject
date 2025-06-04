@@ -58,9 +58,8 @@ namespace Racer.Menu
 
         private bool _isStartScreen = true;
 
-        private void Start()
+        private void Awake()
         {
-            _volumeSlider.value = Managers.GameManager.Self.PlayerSave.SoundVolume;
             StartCoroutine(StartScreen());
         }
 
@@ -75,13 +74,14 @@ namespace Racer.Menu
             OnChooseCar(carID);
         }
 
-        private IEnumerator StartScreen()
+        public IEnumerator StartScreen()
         {
             _isStartScreen = true;
             DisableAllWindows();
             _startScreen.SetActive(true);
             while (_isStartScreen)
             {
+                yield return null;
                 if (Input.anyKey)
                 {
                     _isStartScreen = false;
@@ -121,7 +121,13 @@ namespace Racer.Menu
         public void ShowSettings()
         {
             DisableAllWindows();
+            _volumeSlider.value = Managers.GameManager.Self.PlayerSave.SoundVolume;
             _settingsPanel.SetActive(true);
+        }
+
+        public void SetVolume(float volume)
+        {
+            GameManager.Self.SetVolume(volume);
         }
 
         public void ShowRaces()

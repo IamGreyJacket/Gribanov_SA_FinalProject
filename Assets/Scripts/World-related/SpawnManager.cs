@@ -35,7 +35,7 @@ namespace Racer.Managers
                     cameraController.SetCar(carClone);
                     cameraController.SetCamera(Camera.main);
                     Camera.main.GetComponent<Player.Dashboard>().SetCar(carClone);
-                    Camera.main.GetComponentInChildren<MinimapComponent>().SetCar(carClone);
+                    Camera.main.GetComponentInChildren<MinimapComponent>().FindParticipants();
                     var raceHUD = Camera.main.GetComponent<Player.RaceHUD>();
                     if (raceHUD != null) raceHUD.SetJudge(carClone.GetComponent<Assistants.Judge>());
 

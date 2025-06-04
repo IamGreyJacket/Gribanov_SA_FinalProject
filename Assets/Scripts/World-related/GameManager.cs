@@ -60,7 +60,7 @@ namespace Racer.Managers
 
         private void Awake()
         {
-            if (Self == null)
+            if (GameManager.Self == null)
             {
                 Self = this;
                 _isSelf = true;
